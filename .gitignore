@@ -1,0 +1,45 @@
+Virtual Environment
+
+venv/
+.env/
+.venv/
+
+Python cache
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+Environment variables
+
+.env
+
+OS files
+
+.DS_Store
+Thumbs.db
+
+Logs
+
+*.log
+
+Build / distribution
+
+build/
+dist/
+*.egg-info/
+
+IDEs / Editors
+
+.vscode/
+.idea/
+
+Model files
+
+*.pkl
+*.joblib
+
+Dataset
+
+data/spam.csv
