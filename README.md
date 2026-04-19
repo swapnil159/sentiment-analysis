@@ -52,6 +52,7 @@ The goal is to explore how different text representation techniques impact model
 
 ## 📂 Project Structure
 
+```text
 sentiment-analysis/
 │
 ├── data/
@@ -66,6 +67,7 @@ sentiment-analysis/
 │
 ├── requirements.txt
 └── README.md
+```
 
 
 ---
