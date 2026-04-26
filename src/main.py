@@ -51,6 +51,8 @@ def main():
     model.train()
     model.evaluate()
 
+    model.get_features_names(vocab)
+
 
 
 if __name__ == "__main__":

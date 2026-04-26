@@ -1,52 +1,70 @@
-# 🎬 Sentiment Analysis using Bag of Words & TF-IDF
+# 🎬 Sentiment Analysis with Classical NLP (BoW, TF-IDF, NB, LR, SVM)
 
 ## 📌 Overview
 
-This project implements a **Sentiment Analysis System** to classify movie reviews as **Positive** or **Negative**.
+This project builds a **Sentiment Analysis system** to classify movie reviews as **Positive** or **Negative**, while systematically exploring:
 
-The goal is to explore how different text representation techniques impact model performance, specifically:
+* Text representation techniques: **Bag of Words (BoW)** vs **TF-IDF**
+* Effect of **n-grams (unigram vs bigram)**
+* Model comparison:
 
-- Bag of Words (BoW)
-- TF-IDF (Term Frequency–Inverse Document Frequency)
-- Effect of n-grams (unigram vs bigram)
+  * **Naive Bayes**
+  * **Logistic Regression**
+  * **Linear SVM**
+
+The focus is not just performance, but understanding:
+
+> **How feature engineering and model choice impact results in NLP**
 
 ---
 
 ## 🚀 Features
 
-- Text preprocessing (tokenization, cleaning)
-- Custom implementation of:
-  - Bag of Words (BoW)
-  - TF-IDF
-- Support for **n-grams (unigram, bigram)**
-- SpamModel-based classification (Naive Bayes)
-- Evaluation using:
-  - Accuracy
-  - Precision, Recall, F1-score
-  - Confusion Matrix
-- CLI-based experimentation
+* Custom implementation of:
+
+  * Bag of Words (BoW)
+  * TF-IDF
+* Support for **n-grams (unigram, bigram)**
+* Multiple models:
+
+  * Naive Bayes
+  * Logistic Regression
+  * Linear SVM
+* Evaluation using:
+
+  * Accuracy
+  * Precision, Recall, F1-score
+  * Confusion Matrix
+* CLI-based experimentation
 
 ---
 
-## 🧠 How It Works
+## 🧠 Approach
 
-1. **Preprocessing**
-   - Clean and tokenize text
-   - Prepare corpus for vectorization
+### 1. Preprocessing
 
-2. **Vectorization**
-   - Convert text into numerical features using:
-     - BoW
-     - TF-IDF
-   - Option to use:
-     - Unigrams
-     - Bigrams
+* Text cleaning and tokenization
 
-3. **Model Training**
-   - Train a Naive Bayes classifier
+### 2. Feature Engineering
 
-4. **Evaluation**
-   - Measure performance using classification metrics
+* BoW and TF-IDF representations
+* Controlled vocabulary size (2000)
+* Experiments with:
+
+  * Unigrams
+  * Bigrams
+
+### 3. Modeling
+
+* Compared three model families:
+
+  * Generative: Naive Bayes
+  * Discriminative: Logistic Regression
+  * Margin-based: Linear SVM
+
+### 4. Evaluation
+
+* Quantitative metrics + confusion matrix analysis
 
 ---
 
@@ -56,38 +74,30 @@ The goal is to explore how different text representation techniques impact model
 sentiment-analysis/
 │
 ├── data/
-│ └── sample_sentiment.csv
+│   └── sample_sentiment.csv
 │
 ├── src/
-│ ├── preprocessing.py
-│ ├── bow.py
-│ ├── tfidf.py
-│ ├── model.py
-│ └── main.py
+│   ├── preprocessing.py
+│   ├── bow.py
+│   ├── tfidf.py
+│   ├── model.py
+│   └── main.py
 │
 ├── requirements.txt
 └── README.md
 ```
 
-
 ---
 
 ## ▶️ How to Run
 
-1. Clone the repository:
-
 ```bash
 git clone <your-repo-link>
 cd sentiment-analysis
-```
-
-2. Install dependencies:
-
-```bash
 pip install -r requirements.txt
 ```
 
-3. Run experiments
+### Run experiments:
 
 ```bash
 python src/main.py --features bow --ngram 1
@@ -101,111 +111,136 @@ python src/main.py --features tfidf --ngram 2
 
 ## 📊 Results
 
-The model was evaluated on a test set of 10,000 reviews.
+Evaluation performed on **10,000 test samples**
 
-### 🔵 TF-IDF (Unigram)
-```text
-Accuracy: 84.76%
+### 🔹 Naive Bayes
+
+| Features | N-gram | Accuracy |
+| -------- | ------ | -------- |
+| TF-IDF   | 1      | 84.76%   |
+| TF-IDF   | 2      | 82.24%   |
+| BoW      | 1      | 82.35%   |
+| BoW      | 2      | 80.58%   |
+
+---
+
+### 🔹 Logistic Regression (TF-IDF, Unigram)
+
+```
+Accuracy: 87.24%
 
 Confusion Matrix:
-
-[[4158  803]
- [ 721 4318]]
+[[4265  696]
+ [ 580 4459]]
 ```
 
-### 🔵 TF-IDF (Bigram)
-```text
-Accuracy: 82.24%
+---
+
+### 🔹 Linear SVM (TF-IDF, Unigram)
+
+```
+Accuracy: 88.27%
 
 Confusion Matrix:
-
-[[3974  987]
- [ 789 4250]]
+[[4328  633]
+ [ 540 4499]]
 ```
 
-### 🟢 Bag of Words (Unigram)
-```text
-Accuracy: 82.35%
-
-Confusion Matrix:
-
-[[4136  825]
- [ 940 4099]]
-```
-
-### 🟢 Bag of Words (Bigram)
-```text
-Accuracy: 80.58%
-
-Confusion Matrix:
-
-[[3932 1029]
- [ 913 4126]]
-```
+---
 
 ## 📈 Model Comparison
 
-| Features | N-gram | Accuracy   |
-| -------- | ------ | ---------- |
-| TF-IDF   | 1      | **84.76%** |
-| TF-IDF   | 2      | 82.24%     |
-| BoW      | 1      | 82.35%     |
-| BoW      | 2      | 80.58%     |
+| Model               | Accuracy  |
+| ------------------- | --------- |
+| Naive Bayes         | ~84.7%    |
+| Logistic Regression | 87.2%     |
+| Linear SVM          | **88.3%** |
 
 ---
 
 ## 🔍 Key Insights
 
-- TF-IDF outperformed Bag of Words, highlighting the importance of term weighting
-- Unigram models performed better than bigrams in this setup
-- Increasing n-grams introduced:
-    -  data sparsity
-    - fragmented features
-- Vocabulary size constraint (2000) limited bigram effectiveness
-- TF-IDF unigram achieved the best balance of performance and efficiency
+### 1. TF-IDF > Bag of Words
+
+* Term weighting improves signal quality
+* Reduces impact of frequent but uninformative words
 
 ---
 
-## 🧠 Observations
+### 2. Unigrams > Bigrams (under constraints)
 
-- Sentiment analysis is less keyword-driven and more context-based
-- TF-IDF helps focus on meaningful words instead of frequent ones
-- Higher n-grams require:
-    - more data
-    - larger vocabulary
+* Bigrams increased sparsity
+* Vocabulary cap (2000) limited useful bigram coverage
+* Resulted in degraded performance
+
+---
+
+### 3. Model Choice Matters More Than Feature Complexity
+
+* Switching from Naive Bayes → Logistic Regression gave ~3% gain
+* Further improvement with Linear SVM
+
+---
+
+### 4. Why Linear Models Work Well for Text
+
+* Text data is **high-dimensional and sparse**
+* Linear models scale well and generalize effectively
+
+---
+
+### 5. Feature Importance Reveals Model Behavior
+
+Top learned words:
+
+**Positive:**
+
+* great, excellent, amazing, wonderful
+
+**Negative:**
+
+* bad, worst, awful, boring
+
+Also observed:
+
+* Dataset-specific artifacts (e.g., “minutes”, “very”)
 
 ---
 
 ## ⚠️ Limitations
 
-- Uses dense vector representation (memory inefficient)
-- Limited vocabulary size affects performance
-- Cannot capture deep semantic meaning
-- No handling of advanced language structures
+* Fixed vocabulary size (2000)
+* Sparse representations ignore semantic similarity
+* Cannot capture:
+
+  * word order (effectively)
+  * context
+  * sarcasm / nuanced sentiment
 
 ---
 
-## 🔍 Future Improvements
+## 🔮 Future Work
 
-- Use sparse matrix representation
-- Try Logistic Regression / SVM
-- Increase vocabulary size with optimized storage
-- Implement n-gram combinations (1 + 2)
-- Explore word embeddings (Word2Vec, GloVe)
+* Word embeddings (Word2Vec, GloVe)
+* Deep learning models (LSTM)
+* Transformer-based models (BERT)
+* Hyperparameter tuning
+* Larger vocabulary with sparse optimization
 
 ---
 
 ## 🎯 Conclusion
 
-- Best performing model: TF-IDF with unigram features
-- Simpler representations outperformed more complex ones under constraints
-- Demonstrates the importance of:
-    - feature engineering
-    - data characteristics
-    - model simplicity
+* Best model: **Linear SVM with TF-IDF (unigram)**
+* Simpler features (unigrams) outperformed more complex ones under constraints
+* Demonstrates:
+
+  * Importance of feature engineering
+  * Impact of model choice
+  * Trade-offs in NLP systems
 
 ---
 
-## 📌 Author
+## 👤 Author
 
 Swapnil Mahajan
