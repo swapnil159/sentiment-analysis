@@ -3,6 +3,8 @@ from preprocessing import load_data, create_vocab
 from bow import vectorize_bow
 from tfidf import calculate_tf_idf
 from model import Model
+from embeddings import Word2VecLoader
+from sentence_vectorizer import SentenceVectorizer
 
 def parse_args():
     args = argparse.ArgumentParser("Sentiment analyser")
@@ -41,17 +43,24 @@ def main():
     vocab = create_vocab(corpus, args.ngrams)
     print("Vocab Size: ", len(vocab))
 
+    w2v = Word2VecLoader()
+    w2v.load_model()
 
-    if args.features == "bow":
-        X = vectorize_bow(corpus, vocab, args.ngrams)
-    else:
-        X = calculate_tf_idf(corpus, vocab, args.ngrams)
+    tfidf = calculate_tf_idf(corpus, vocab, args.ngrams)
+    vectorizer = SentenceVectorizer(w2v, vocab)
+    X = vectorizer.transform(corpus, tfidf)
+
+
+    # if args.features == "bow":
+    #     X = vectorize_bow(corpus, vocab, args.ngrams)
+    # else:
+    #     X = calculate_tf_idf(corpus, vocab, args.ngrams)
     
     model = Model(X, labels)
     model.train()
     model.evaluate()
 
-    model.get_features_names(vocab)
+    # model.get_features_names(vocab)
 
 
 
